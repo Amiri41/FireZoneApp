@@ -14,8 +14,8 @@ jobs:
 
       - name: Unzip project
         run: |
-          if [ -f FireZone_AndroidStudio_final.zip ]; then
-            unzip -o FireZone_AndroidStudio_final.zip -d extracted
+          if [ -f FireZone_AndroidStudio_final-1.zip ]; then
+            unzip -o FireZone_AndroidStudio_final-1.zip -d extracted
             # لو الملفات جات داخل مجلد فرعي واحد، ننقلوها للجذر
             if [ "$(ls extracted | wc -l)" -eq 1 ] && [ -d "extracted/$(ls extracted)" ]; then
               mv extracted/*/* .
@@ -30,11 +30,11 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug
+        run: gradle assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
